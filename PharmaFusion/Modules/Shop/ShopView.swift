@@ -22,20 +22,6 @@ struct ShopView: View {
     @State private var isShowingBottomSheet = false
     @State private var selectedOption: String? = nil
     
-    init() {
-        // Setting up the navigation bar appearance
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.backgroundColor = UIColor.init(hex: "503DBB")
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
-    
     var body: some View {
         ZStack {
             ScrollView {

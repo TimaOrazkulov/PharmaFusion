@@ -27,7 +27,7 @@ struct SmallItemView: View {
                     .font(.system(size: 14, weight: .regular))
                     .foregroundStyle(Color.init(hex: "5C5D6C"))
             }
-            .padding(8)
+            .padding()
         }
         .background(Color.init(hex: "A69EDD"))
         .clipShape(RoundedRectangle(cornerRadius: 20))
