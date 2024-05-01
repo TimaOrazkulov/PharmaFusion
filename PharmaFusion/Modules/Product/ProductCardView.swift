@@ -29,11 +29,17 @@ struct ProductCardView: View {
                 }
                 VStack {
                     TabView(selection: $currentPage) {
-                        Text("Page 1")
+                        Image("ketonal")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .tag(0)
-                        Text("Page 2")
+                        Image("ketonal")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .tag(1)
-                        Text("Page 3")
+                        Image("ketonal")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .tag(2)
                     }
                     .tabViewStyle(PageTabViewStyle())
@@ -42,9 +48,7 @@ struct ProductCardView: View {
                     PageControl(numberOfPages: 3, currentPage: $currentPage)
                         .padding(.vertical)
                 }
-                Image("ketonal") // Replace with actual image loading
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                
                 
 
                 // Product Details
