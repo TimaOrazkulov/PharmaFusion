@@ -15,79 +15,103 @@ struct ProductCardView: View {
     let description: String
     let pharmacies: [Pharmacy]
     let reviews: [Review]
+    @State private var currentPage = 0
 
     var body: some View {
-        VStack {
-            // Product Image
-            Image("ketonal") // Replace with actual image loading
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-
-            // Product Details
-            VStack(alignment: .leading) {
-                Text(productName)
-                    .font(.title)
-                    .bold()
-
+        ScrollView{
+            VStack {
+                // Product Image
                 HStack {
-                    Text("From:")
-                        .font(.headline)
-                    Text(price)
-                        .font(.headline)
-                        .foregroundColor(.blue)
+                    Text("Product Card")
+                        .underline()
+                        .font(.system(size: 30))
+                    Spacer()
                 }
-
-                HStack {
-                    Text("Dosage:")
-                        .font(.headline)
-                    Text(dosage)
-                        .font(.headline)
+                VStack {
+                    TabView(selection: $currentPage) {
+                        Text("Page 1")
+                            .tag(0)
+                        Text("Page 2")
+                            .tag(1)
+                        Text("Page 3")
+                            .tag(2)
+                    }
+                    .tabViewStyle(PageTabViewStyle())
+                    
+                    // Page control
+                    PageControl(numberOfPages: 3, currentPage: $currentPage)
+                        .padding(.vertical)
                 }
+                Image("ketonal") // Replace with actual image loading
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
 
-                HStack {
-                    Text("Manufacturer:")
-                        .font(.headline)
-                    Text(manufacturer)
-                        .font(.headline)
+                // Product Details
+                VStack(alignment: .leading) {
+                    Text(productName)
+                        .font(.title)
+                        .bold()
+
+                    HStack {
+                        Text("From:")
+                            .font(.headline)
+                        Text(price)
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                    }
+
+                    HStack {
+                        Text("Dosage:")
+                            .font(.headline)
+                        Text(dosage)
+                            .font(.headline)
+                    }
+
+                    HStack {
+                        Text("Manufacturer:")
+                            .font(.headline)
+                        Text(manufacturer)
+                            .font(.headline)
+                    }
+
+                    Text(description)
+                        .padding(.top)
                 }
+                .padding()
 
-                Text(description)
-                    .padding(.top)
+                // Pharmacies
+                VStack(alignment: .leading) {
+                    Text("Pharmacies")
+                        .font(.title2)
+                        .bold()
+                        .padding(.bottom)
+
+                    ForEach(pharmacies, id: \.id) { pharmacy in
+                        PharmacyRow(pharmacy: pharmacy)
+                    }
+                }
+                .padding()
+
+                // Reviews
+                VStack(alignment: .leading) {
+                    Text("Reviews")
+                        .font(.title2)
+                        .bold()
+                        .padding(.bottom)
+
+                    ForEach(reviews, id: \.id) { review in
+                        ReviewRow(review: review)
+                    }
+
+                    Button("View more") {
+                        // Handle action to view more reviews
+                    }
+                }
+                .padding()
             }
-            .padding()
-
-            // Pharmacies
-            VStack(alignment: .leading) {
-                Text("Pharmacies")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom)
-
-                ForEach(pharmacies, id: \.id) { pharmacy in
-                    PharmacyRow(pharmacy: pharmacy)
-                }
-            }
-            .padding()
-
-            // Reviews
-            VStack(alignment: .leading) {
-                Text("Reviews")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom)
-
-                ForEach(reviews, id: \.id) { review in
-                    ReviewRow(review: review)
-                }
-
-                Button("View more") {
-                    // Handle action to view more reviews
-                }
-            }
-            .padding()
+            .padding(.leading, 16)
         }
-        .padding()
     }
 }
 
@@ -165,5 +189,24 @@ struct ContentView_Previews: PreviewProvider {
                 Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!")
             ]
         )
+    }
+}
+
+struct PageControl: View {
+    var numberOfPages: Int
+    @Binding var currentPage: Int
+    
+    var body: some View {
+        HStack {
+            ForEach(0..<numberOfPages) { page in
+                Circle()
+                    .fill(page == currentPage ? Color.blue : Color.gray)
+                    .frame(width: 8, height: 8)
+                    .padding(4)
+                    .onTapGesture {
+                        currentPage = page
+                    }
+            }
+        }
     }
 }
