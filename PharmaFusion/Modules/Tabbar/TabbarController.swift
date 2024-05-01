@@ -18,11 +18,13 @@ struct TabbarController: View {
                 Image(systemName: "house")
                 Text("Home")
             }
-            ShopView()
-                .tabItem {
-                    Image(systemName: "cart.fill")
-                    Text("Shop")
-                }
+            NavigationView(content: {
+                ShopView()
+            })
+            .tabItem {
+                Image(systemName: "cart.fill")
+                Text("Shop")
+            }
             ProductView()
                 .tabItem {
                     Image(systemName: "list.clipboard")

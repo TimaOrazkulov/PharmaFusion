@@ -18,6 +18,9 @@ struct HomeView: View {
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
         appearance.backgroundColor = UIColor.init(hex: "503DBB")
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
@@ -27,11 +30,21 @@ struct HomeView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    TextField("Search something...", text: $searchText)
-                        .padding()
-                        .textFieldStyle(.roundedBorder)
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .padding(.leading, 8)
+                        TextField("Search", text: $searchText)
+                            .padding(.trailing, 16)
+                            .font(.system(size: 14, weight: .regular))
+                    }
+                    .frame(height: 36)
+                    .background(Color.white)
+                    .cornerRadius(40)
+                    .padding(.horizontal, 16)
+
                     AdCardView()
                         .padding(.horizontal, 8)
+                        .padding(.top, 8)
                     AdCardView()
                         .padding(.horizontal, 8)
                     HStack {
@@ -60,6 +73,7 @@ struct HomeView: View {
         .background(Color.init(hex: "503DBB"))
         .navigationTitle("Home")
         .navigationBarTitleDisplayMode(.large)
+        .toolbarBackground(.visible, for: .tabBar)
     }
 }
 

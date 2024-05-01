@@ -16,13 +16,14 @@ struct CollectionView: View {
                 LazyHStack(spacing: 16) {
                     ForEach(items, id: \.self) { item in
                         Text(item)
+                            .foregroundStyle(.white)
                             .frame(height: 32)
                             .padding(.horizontal, 16)
-                            .background(Color.blue)
+                            .background(Color.init(hex: "#6562CE"))
                             .cornerRadius(16)
                     }
                 }
-            }
+            }.scrollIndicators(.hidden)
         }
     }
 }
