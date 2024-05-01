@@ -16,20 +16,6 @@ struct ShopView: View {
     @State private var isShowingBottomSheet = false
     @State private var selectedOption: String? = nil
     
-    init() {
-        // Setting up the navigation bar appearance
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.backgroundColor = UIColor.init(hex: "503DBB")
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
-    
     var body: some View {
         ZStack {
             ScrollView {
@@ -76,20 +62,6 @@ struct ShopView: View {
                             .background(Color.white)
                             .cornerRadius(20)
                         }
-//                        .overlay(
-//                            Text("Selected option: \(selectedOption ?? "None")")
-//                                .padding()
-//                                .background(Color.gray)
-//                                .foregroundColor(.white)
-//                                .cornerRadius(10)
-//                                .padding()
-//                                .opacity(selectedOption == nil ? 0 : 1)
-//                                .animation(.default)
-//                            , alignment: .bottom
-//                        )
-//                        .onTapGesture {
-//                            isShowingBottomSheet = true
-//                        }
                     
                     LazyVStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<items.count / 2 + items.count % 2, id: \.self) { row in

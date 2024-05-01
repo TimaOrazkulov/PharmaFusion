@@ -12,20 +12,6 @@ struct HomeView: View {
     let items = [SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView()]
 //    let items = (0..<100).map { "Item \($0)" }
     
-    init() {
-        // Setting up the navigation bar appearance
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        appearance.backgroundColor = UIColor.init(hex: "503DBB")
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
-    
     var body: some View {
         ZStack {
             ScrollView {
@@ -72,7 +58,7 @@ struct HomeView: View {
         }
         .background(Color.init(hex: "503DBB"))
         .navigationTitle("Home")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.visible, for: .tabBar)
     }
 }

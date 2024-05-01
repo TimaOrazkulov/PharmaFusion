@@ -25,16 +25,20 @@ struct TabbarController: View {
                 Image(systemName: "cart.fill")
                 Text("Shop")
             }
-            ProductView()
-                .tabItem {
-                    Image(systemName: "list.clipboard")
-                    Text("Tracking")
-                }
-            Text("Fourth Tab")
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Profile")
-                }
+//            NavigationView(content: {
+//                ProductView()
+//            })
+//            .tabItem {
+//                Image(systemName: "list.clipboard")
+//                Text("Tracking")
+//            }
+            NavigationView {
+                ProfileView()
+            }
+            .tabItem {
+                Image(systemName: "person.crop.circle")
+                Text("Profile")
+            }
         }
         .navigationBarBackButtonHidden(true)
     }
