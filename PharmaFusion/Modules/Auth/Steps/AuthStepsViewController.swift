@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class AuthStepsViewController: UIViewController {
     
@@ -81,8 +82,9 @@ final class AuthStepsViewController: UIViewController {
     
     @objc
     private func skipButtonDidTap() {
-        let viewController = UIViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        let viewController = TabbarController()
+        let controller = UIHostingController(rootView: viewController)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func setup() {
