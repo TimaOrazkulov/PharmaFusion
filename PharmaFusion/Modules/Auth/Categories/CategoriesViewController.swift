@@ -10,12 +10,12 @@ import UIKit
 final class CategoriesViewController: UIViewController {
     
     private var categories: [Category] = [
-        .init(title: "Personal hygiene", image: URL(fileURLWithPath: "")),
-        .init(title: "Medicine", image: URL(fileURLWithPath: "")),
-        .init(title: "Dietary supplements", image: URL(fileURLWithPath: "")),
-        .init(title: "Emergency items", image: URL(fileURLWithPath: "")),
-        .init(title: "Newborns", image: URL(fileURLWithPath: "")),
-        .init(title: "Masks, bandages and syringes", image: URL(fileURLWithPath: ""))
+        .init(title: "Personal hygiene", image: UIImage(named: "personalHygiene")),
+        .init(title: "Medicine", image: UIImage(named: "personalHygiene")),
+        .init(title: "Dietary supplements", image: UIImage(named: "personalHygiene")),
+        .init(title: "Emergency items", image: UIImage(named: "personalHygiene")),
+        .init(title: "Newborns", image: UIImage(named: "personalHygiene")),
+        .init(title: "Masks, bandages and syringes", image: UIImage(named: "personalHygiene"))
     ] {
         didSet {
             collectionView.reloadData()
@@ -27,6 +27,7 @@ final class CategoriesViewController: UIViewController {
         label.font = .systemFont(ofSize: 30)
         label.textColor = .white
         label.textAlignment = .center
+        label.text = "How can we help?"
         return label
     }()
     
@@ -35,11 +36,12 @@ final class CategoriesViewController: UIViewController {
         label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         label.textAlignment = .center
+        label.text = "Tell us what you’re interested in so we\ncan customize the app for your needs."
         label.numberOfLines = 0
         return label
     }()
     
-    private lazy var collectionView = UICollectionView()
+    private lazy var collectionView = makeCollectionView()
     
     private lazy var actionButton = {
         let button = UIButton()

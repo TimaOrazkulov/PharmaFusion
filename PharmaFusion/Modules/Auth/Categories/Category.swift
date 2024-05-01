@@ -5,10 +5,10 @@
 //  Created by Temirlan Orazkulov on 05.04.2024.
 //
 
-import Foundation
+import UIKit
 
 struct Category {
     let title: String
-    let image: URL
+    let image: UIImage?
     var isSelected = false
 }

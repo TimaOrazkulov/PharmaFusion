@@ -75,16 +75,15 @@ final class AuthStepsViewController: UIViewController {
             let rect = collectionView.layoutAttributesForItem(at: IndexPath(row: currentItem, section: 0))?.frame
             collectionView.scrollRectToVisible(rect!, animated: true)
         } else {
-            let viewController = UIViewController()
+            let viewController = RegistrationViewController()
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
     
     @objc
     private func skipButtonDidTap() {
-        let viewController = TabbarController()
-        let controller = UIHostingController(rootView: viewController)
-        navigationController?.pushViewController(controller, animated: true)
+        let viewController = RegistrationViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func setup() {

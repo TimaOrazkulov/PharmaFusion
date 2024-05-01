@@ -13,19 +13,19 @@ struct AdCardView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Track your pills and recovery in real time")
-                        .font(.title2)
+                        .font(.system(size: 20, weight: .medium))
                     Text("Track your pills and recovery in real time")
-                        .font(.system(size: 16))
+                        .font(.system(size: 14, weight: .regular))
                 }
                 .padding(.leading, 8)
                 Image(.step1)
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 120, height: 100)
                     .padding(.trailing, 8)
             }
             .padding()
         }
-        .background(Color.gray)
+        .background(Color.init(hex: "CAC5EB"))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

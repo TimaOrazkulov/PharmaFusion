@@ -46,7 +46,7 @@ final class CategoryView: UIControl {
     
     func configure(with category: Category) {
         titleLabel.text = category.title
-        imageView.kf.setImage(with: category.image)
+        imageView.image = category.image
         isSelected = category.isSelected
     }
     
@@ -59,12 +59,12 @@ final class CategoryView: UIControl {
     }
     
     private func setupConstraints() {
-        titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(12)
-        }
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(12)
-            make.bottom.equalTo(titleLabel.snp.top).offset(-12)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-8)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(12)
         }
     }
 }
