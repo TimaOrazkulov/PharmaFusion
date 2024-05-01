@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class GoalsViewController: UIViewController {
     
@@ -95,7 +96,9 @@ final class GoalsViewController: UIViewController {
     
     @objc
     private func actionButtonDidTap() {
-        // TODO: - add transition to goal screen
+        let viewController = TabbarController()
+        let controller = UIHostingController(rootView: viewController)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func configureNavigationBar(isHidden: Bool) {

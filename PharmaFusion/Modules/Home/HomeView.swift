@@ -12,17 +12,33 @@ struct HomeView: View {
     let items = [SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView()]
 //    let items = (0..<100).map { "Item \($0)" }
     
+    init() {
+        // Setting up the navigation bar appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        appearance.backgroundColor = UIColor.init(hex: "503DBB")
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
                     TextField("Search something...", text: $searchText)
                         .padding()
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(.roundedBorder)
                     AdCardView()
+                        .padding(.horizontal, 8)
                     AdCardView()
+                        .padding(.horizontal, 8)
                     HStack {
                         Text("TOP products 2023")
+                            .foregroundStyle(.white)
+                            .font(.system(size: 20, weight: .semibold))
+                            .padding(.leading, 12)
                         Spacer()
                     }
                     
@@ -36,11 +52,14 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .padding()
+                    .padding(.horizontal, 16)
                 }
                 .padding(.horizontal, 8)
             }
         }
+        .background(Color.init(hex: "503DBB"))
+        .navigationTitle("Home")
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 

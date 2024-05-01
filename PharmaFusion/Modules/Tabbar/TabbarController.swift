@@ -8,29 +8,33 @@
 import SwiftUI
 
 struct TabbarController: View {
+    
     var body: some View {
         TabView {
-            HomeView()
-                .tabItem {
-                    Image(systemName: "1.circle")
-                    Text("First")
-                }
+            NavigationView(content: {
+                HomeView()
+            })
+            .tabItem {
+                Image(systemName: "house")
+                Text("Home")
+            }
             ShopView()
                 .tabItem {
-                    Image(systemName: "2.circle")
-                    Text("Second")
+                    Image(systemName: "cart.fill")
+                    Text("Shop")
                 }
             ProductView()
                 .tabItem {
-                    Image(systemName: "2.circle")
-                    Text("Second")
+                    Image(systemName: "list.clipboard")
+                    Text("Tracking")
                 }
             Text("Fourth Tab")
                 .tabItem {
-                    Image(systemName: "2.circle")
-                    Text("Second")
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
                 }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
