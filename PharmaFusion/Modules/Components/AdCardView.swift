@@ -23,7 +23,7 @@ struct AdCardView: View {
                     .frame(width: 120, height: 100)
                     .padding(.trailing, 8)
             }
-            .padding()
+            .padding(4)
         }
         .background(Color.init(hex: "CAC5EB"))
         .clipShape(RoundedRectangle(cornerRadius: 16))

@@ -16,18 +16,42 @@ struct ShopView: View {
     @State private var isShowingBottomSheet = false
     @State private var selectedOption: String? = nil
     
+    init() {
+        // Setting up the navigation bar appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        appearance.backgroundColor = UIColor.init(hex: "503DBB")
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    TextField("Search something...", text: $searchText)
-                        .padding()
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .padding(.leading, 8)
+                        TextField("Search", text: $searchText)
+                            .padding(.trailing, 16)
+                            .font(.system(size: 14, weight: .regular))
+                    }
+                    .frame(height: 36)
+                    .background(Color.white)
+                    .cornerRadius(40)
+                    .padding(.horizontal, 16)
                     
                     CollectionView(items: typoItems)
                         .padding(.leading, 16)
                     HStack {
                         Text("List of products")
+                            .foregroundStyle(.white)
+                            .font(.system(size: 20, weight: .medium))
                             .padding(.leading, 16)
                             .padding([.vertical], 4)
                         Spacer()
@@ -81,6 +105,10 @@ struct ShopView: View {
                 }
                 .padding(.horizontal, 8)
             }
+            .background(Color.init(hex: "503DBB"))
+            .navigationTitle("Shop")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbarBackground(.visible, for: .tabBar)
         }
     }
 }
