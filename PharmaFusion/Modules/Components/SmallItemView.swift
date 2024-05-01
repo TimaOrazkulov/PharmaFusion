@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SmallItemView: View {
+    
+    let item: ItemSmall
+    
     var body: some View {
         VStack {
             Image(.step1)
@@ -16,11 +19,11 @@ struct SmallItemView: View {
                 .padding([.trailing, .top], 8)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             VStack(alignment: .leading) {
-                Text("Rinoksil, 10 ml")
+                Text(item.title)
                     .font(.system(size: 20, weight: .medium))
-                Text("2000 tg")
+                Text(item.price)
                     .font(.system(size: 16, weight: .semibold))
-                Text("1 spoon after breakfast")
+                Text(item.description)
                     .font(.system(size: 14, weight: .regular))
                     .foregroundStyle(Color.init(hex: "5C5D6C"))
             }
@@ -32,5 +35,11 @@ struct SmallItemView: View {
 }
 
 #Preview {
-    SmallItemView()
+    SmallItemView(
+        item: ItemSmall(
+            title: "Rinoksil, 10 ml",
+            price: "2000 tg",
+            description: "1 spoon after breakfast"
+        )
+    )
 }

@@ -8,81 +8,85 @@
 import SwiftUI
 
 struct ProductCardView: View {
-    let productName: String
-    let price: String
-    let manufacturer: String
-    let dosage: String
-    let description: String
-    let pharmacies: [Pharmacy]
-    let reviews: [Review]
     @State private var currentPage = 0
+    let productCard: ProductCard
 
     var body: some View {
-        ScrollView{
+        ScrollView {
             VStack {
-                // Product Image
-                HStack {
-                    Text("Product Card")
-                        .underline()
-                        .font(.system(size: 30))
-                    Spacer()
-                }
                 VStack {
                     TabView(selection: $currentPage) {
                         Image("ketonal")
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .padding(.bottom, 48)
+                            .padding(.horizontal, 32)
                             .tag(0)
                         Image("ketonal")
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .padding(.bottom, 48)
+                            .padding(.horizontal, 32)
                             .tag(1)
                         Image("ketonal")
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .padding(.bottom, 48)
+                            .padding(.horizontal, 32)
                             .tag(2)
                     }
                     .tabViewStyle(PageTabViewStyle())
-                    
-                    // Page control
-                    PageControl(numberOfPages: 3, currentPage: $currentPage)
-                        .padding(.vertical)
+                    .padding(.top, 16)
+                    .background(Color.init(hex: "CAC5EB"))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .frame(height: 300)
                 }
+                .padding(.horizontal, 16)
                 
-                
-
-                // Product Details
                 VStack(alignment: .leading) {
-                    Text(productName)
+                    Text(productCard.productName)
                         .font(.title)
                         .bold()
+                        .foregroundStyle(.white)
 
                     HStack {
                         Text("From:")
                             .font(.headline)
-                        Text(price)
+                            .foregroundStyle(.white)
+                        Text(productCard.price)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 8)
                             .font(.headline)
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.white)
+                            .background(Color.init(hex: "CAC5EB"))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
-
                     HStack {
                         Text("Dosage:")
                             .font(.headline)
-                        Text(dosage)
+                            .foregroundStyle(.white)
+                        Text(productCard.dosage)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 8)
                             .font(.headline)
+                            .foregroundStyle(.white)
+                            .background(Color.init(hex: "CAC5EB"))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
-
                     HStack {
                         Text("Manufacturer:")
                             .font(.headline)
-                        Text(manufacturer)
+                            .foregroundStyle(.white)
+                        Text(productCard.manufacturer)
                             .font(.headline)
+                            .foregroundStyle(.white)
                     }
-
-                    Text(description)
+                    Text(productCard.description)
                         .padding(.top)
+                        .foregroundStyle(.white)
                 }
                 .padding()
+                .padding(.bottom, 16)
 
                 // Pharmacies
                 VStack(alignment: .leading) {
@@ -90,12 +94,12 @@ struct ProductCardView: View {
                         .font(.title2)
                         .bold()
                         .padding(.bottom)
-
-                    ForEach(pharmacies, id: \.id) { pharmacy in
+                        .padding(.horizontal, 16)
+                        .foregroundStyle(.white)
+                    ForEach(productCard.pharmacies, id: \.id) { pharmacy in
                         PharmacyRow(pharmacy: pharmacy)
                     }
                 }
-                .padding()
 
                 // Reviews
                 VStack(alignment: .leading) {
@@ -103,32 +107,33 @@ struct ProductCardView: View {
                         .font(.title2)
                         .bold()
                         .padding(.bottom)
-
-                    ForEach(reviews, id: \.id) { review in
+                        .foregroundStyle(.white)
+                    ForEach(productCard.reviews, id: \.id) { review in
                         ReviewRow(review: review)
-                    }
-
-                    Button("View more") {
-                        // Handle action to view more reviews
                     }
                 }
                 .padding()
             }
-            .padding(.leading, 16)
+            .padding(.bottom, 60)
+            .background(Color.init(hex: "503DBB"))
         }
+        .navigationTitle("Product Card")
+        .navigationBarTitleDisplayMode(.large)
+        .background(Color.init(hex: "503DBB"))
+        .toolbarBackground(.visible, for: .tabBar)
     }
 }
 
-struct Pharmacy: Identifiable {
+struct Pharmacy: Identifiable, Hashable {
     let id = UUID()
     let name: String
-    let rating: Double
+    let rating: String
     let reviewCount: Int
     let deliveryTime: String
     let pickupTime: String
 }
 
-struct Review: Identifiable {
+struct Review: Identifiable, Hashable {
     let id = UUID()
     let author: String
     let text: String
@@ -142,21 +147,50 @@ struct PharmacyRow: View {
             VStack(alignment: .leading) {
                 Text(pharmacy.name)
                     .font(.headline)
-                HStack {
+                HStack(spacing: 4) {
                     Image(systemName: "star.fill")
+                        .resizable()
                         .foregroundColor(.yellow)
-                    Text("\(pharmacy.rating) (\(pharmacy.reviewCount) reviews)")
+                        .frame(width: 15, height: 15)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 15, height: 15)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 15, height: 15)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 15, height: 15)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 15, height: 15)
+                    Text("\(pharmacy.reviewCount) ")
                 }
+                Text("\(pharmacy.rating)")
             }
 
             Spacer()
 
             VStack(alignment: .trailing) {
+                Button(action: {}, label: {
+                    Text("Choose")
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .background(Color.init(hex: "503DBB"))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 32))
+                })
                 Text("Delivery \(pharmacy.deliveryTime)")
                 Text("Pickup \(pharmacy.pickupTime)")
             }
         }
+        .padding(.horizontal, 16)
         .padding(.vertical, 8)
+        .background(Color.white)
     }
 }
 
@@ -165,10 +199,37 @@ struct ReviewRow: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(review.author)
-                .font(.headline)
+            HStack {
+                
+                Text(review.author)
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                HStack(spacing: 4) {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 12, height: 12)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 12, height: 12)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 12, height: 12)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 12, height: 12)
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .foregroundColor(.yellow)
+                        .frame(width: 12, height: 12)
+                }
+            }
             Text(review.text)
                 .font(.subheadline)
+                .foregroundStyle(.white)
         }
         .padding(.vertical, 4)
     }
@@ -178,20 +239,22 @@ struct ReviewRow: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ProductCardView(
-            productName: "Ketonal 100 mg",
-            price: "$4.99",
-            manufacturer: "Slovenia",
-            dosage: "100mg",
-            description: "Reduces the amount of secretion, ensures patency of the nasal passages, and introduces nasal breathing. Effectively relieves nasal congestion.",
-            pharmacies: [
-                Pharmacy(name: "Sadykhan pharmacy", rating: 4.8, reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
-                Pharmacy(name: "Rauza pharmacy", rating: 6.8, reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
-                Pharmacy(name: "Apteka+ pharmacy", rating: 10.8, reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09")
-            ],
-            reviews: [
-                Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!"),
-                Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!")
-            ]
+            productCard: .init(
+                productName: "Ketonal 100 mg",
+                price: "$4.99",
+                manufacturer: "Slovenia",
+                dosage: "100mg",
+                description: "Reduces the amount of secretion, ensures patency of the nasal passages, and introduces nasal breathing. Effectively relieves nasal congestion.",
+                pharmacies: [
+                    Pharmacy(name: "Sadykhan pharmacy", rating: "4.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                    Pharmacy(name: "Rauza pharmacy", rating: "6.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                    Pharmacy(name: "Apteka+ pharmacy", rating: "10.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09")
+                ],
+                reviews: [
+                    Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!"),
+                    Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!")
+                ]
+            )
         )
     }
 }

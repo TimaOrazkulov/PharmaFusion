@@ -9,7 +9,36 @@ import SwiftUI
 
 struct HomeView: View {
     @State var searchText: String = ""
-    let items = [SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView()]
+    let items: [SmallItemView] = Array(
+        repeating: SmallItemView(
+            item: ItemSmall(
+                title: "Rinoksil, 10 ml",
+                price: "2000 tg",
+                description: "1 spoon after breakfast"
+            )
+        ),
+        count: 8
+    )
+    
+    private let productCardView = ProductCardView(
+        productCard: .init(
+            productName: "Ketonal 100 mg",
+            price: "$4.99",
+            manufacturer: "Slovenia",
+            dosage: "100mg",
+            description: "Reduces the amount of secretion, ensures patency of the nasal passages, and introduces nasal breathing. Effectively relieves nasal congestion.",
+            pharmacies: [
+                Pharmacy(name: "Sadykhan pharmacy", rating: "4.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                Pharmacy(name: "Rauza pharmacy", rating: "6.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                Pharmacy(name: "Apteka+ pharmacy", rating: "10.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09")
+            ],
+            reviews: [
+                Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!"),
+                Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!")
+            ]
+
+        )
+    )
 //    let items = (0..<100).map { "Item \($0)" }
     
     init() {

@@ -9,7 +9,13 @@ import SwiftUI
 
 struct ShopView: View {
     @State var searchText: String = ""
-    let items = [SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView(), SmallItemView()]
+    let items = Array(repeating: SmallItemView(
+        item: ItemSmall(
+            title: "Rinoksil, 10 ml",
+            price: "2000 tg",
+            description: "1 spoon after breakfast"
+        )
+    ), count: 8)
     let typoItems = ["Allergy", "Heart", "Liver", "Brain", "Smash", "Bob"]
     let filterItems = ["Filters", "Sorting"]
     
@@ -76,27 +82,34 @@ struct ShopView: View {
                             .background(Color.white)
                             .cornerRadius(20)
                         }
-//                        .overlay(
-//                            Text("Selected option: \(selectedOption ?? "None")")
-//                                .padding()
-//                                .background(Color.gray)
-//                                .foregroundColor(.white)
-//                                .cornerRadius(10)
-//                                .padding()
-//                                .opacity(selectedOption == nil ? 0 : 1)
-//                                .animation(.default)
-//                            , alignment: .bottom
-//                        )
-//                        .onTapGesture {
-//                            isShowingBottomSheet = true
-//                        }
                     
                     LazyVStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<items.count / 2 + items.count % 2, id: \.self) { row in
                             HStack(spacing: 16) {
                                 ForEach(0..<2) { column in
                                     let index = column + row * 2
-                                    items[index]
+                                    NavigationLink {
+                                        ProductCardView(
+                                            productCard: .init(
+                                                productName: "Ketonal 100 mg",
+                                                price: "$4.99",
+                                                manufacturer: "Slovenia",
+                                                dosage: "100mg",
+                                                description: "Reduces the amount of secretion, ensures patency of the nasal passages, and introduces nasal breathing. Effectively relieves nasal congestion.",
+                                                pharmacies: [
+                                                    Pharmacy(name: "Sadykhan pharmacy", rating: "4.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                                                    Pharmacy(name: "Rauza pharmacy", rating: "6.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09"),
+                                                    Pharmacy(name: "Apteka+ pharmacy", rating: "10.8 $", reviewCount: 18, deliveryTime: "20:09", pickupTime: "20:09")
+                                                ],
+                                                reviews: [
+                                                    Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!"),
+                                                    Review(author: "Yasmin U.", text: "Amazing spray!! Helped me with my nose problem!")
+                                                ]
+                                            )
+                                        )
+                                    } label: {
+                                        items[index]
+                                    }
                                 }
                             }
                         }
@@ -123,33 +136,5 @@ extension View {
         @ViewBuilder content: @escaping () -> SheetContent
     ) -> some View {
         modifier(BottomSheet(isPresented: isPresented, content: content))
-    }
-}
-
-struct BottomSheet<SheetContent: View>: ViewModifier {
-    @Binding var isPresented: Bool
-    let content: () -> SheetContent
-    
-    func body(content: Content) -> some View {
-        ZStack {
-            content
-            
-            if isPresented {
-                VStack {
-                    Spacer()
-                    Group { // Wrap content in Group
-                        self.content()
-                    }
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .shadow(radius: 5)
-                }
-                .transition(.move(edge: .bottom))
-                .animation(.easeInOut)
-                .edgesIgnoringSafeArea(.bottom)
-            }
-        }
     }
 }
