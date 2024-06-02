@@ -12,63 +12,78 @@ struct ProductView: View {
     let productDescription: String = "Reduces the amount of secretion, ensures patency of the nasal passages, and introduces nasal breathing. Effectively relieves nasal congestion. The action begins within a few minutes and lasts for several hours."
     let price: String = "$4.8"
     @State private var quantity: Int = 1
+    let closeAction: (() -> Void)
+    let buyAction: (() -> Void)
+    let basketAction: (() -> Void)
     
     var body: some View {
-        VStack {
-            Image("ketonal") // Replace with actual image name
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
-            HStack {
-                Text("You choose")
-                    .font(.headline)
-                    .padding(.top)
-                Spacer()
-            }
-            
-            HStack {
+        ZStack {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        closeAction()
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .tint(.black)
+                    })
+                    .padding()
+                }
+                Image("ketonal") // Replace with actual image name
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                 
-                Text(productName)
-                    .font(.title)
-                    .bold()
-                Spacer()
-                Text(price)
-                    .font(.title2)
-                    .bold()
-                
-            }
-            
-        Text(productDescription)
-            .font(.body)
-            .multilineTextAlignment(.leading)
-            
-            HStack {
-                Spacer()
-                Stepper(value: $quantity, in: 1...10) {
-                    Text("\(quantity)")
+                HStack {
+                    Text("You choose")
                         .font(.headline)
+                        .padding(.top)
+                    Spacer()
                 }
-            }
-            .padding(.horizontal)
-            
-            HStack {
-                Button("Add to basket") {
-                    // Add to basket action
-                }
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
                 
-                Button("Buy") {
-                    // Buy action
+                HStack {
+                    
+                    Text(productName)
+                        .font(.title)
+                        .bold()
+                    Spacer()
+                    Text(price)
+                        .font(.title2)
+                        .bold()
+                    
                 }
-                .padding()
-                .background(Color.green)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+                
+            Text(productDescription)
+                .font(.body)
+                .multilineTextAlignment(.leading)
+                
+                HStack {
+                    Spacer()
+                    Stepper(value: $quantity, in: 1...10) {
+                        Text("\(quantity)")
+                            .font(.headline)
+                    }
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Button("Add to basket") {
+                        basketAction()
+                    }
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
+                    Button("Buy") {
+                        buyAction()
+                    }
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
+                .padding(.bottom)
             }
-            .padding(.bottom)
         }
         .padding()
         .background(Color(UIColor.systemBackground))
@@ -78,6 +93,6 @@ struct ProductView: View {
 
 struct ProductView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductView()
+        ProductView(closeAction: {}, buyAction: {}, basketAction: {})
     }
 }

@@ -10,10 +10,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UITabBar.appearance().standardAppearance = UITabBarAppearance.customAppearance()
         let appearance = UINavigationBarAppearance()
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor.white
@@ -21,9 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        appearance.backgroundColor = UIColor.init(hex: "503DBB")
-        UINavigationBar.appearance().standardAppearance = appearance
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        appearance.shadowColor = .clear
+        let scrollAppearance = appearance.copy()
+        scrollAppearance.configureWithDefaultBackground()
+        scrollAppearance.backgroundColor = .init(hex: "503DBB")
+        UINavigationBar.appearance().standardAppearance = scrollAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
         return true
     }
 
@@ -40,7 +43,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 

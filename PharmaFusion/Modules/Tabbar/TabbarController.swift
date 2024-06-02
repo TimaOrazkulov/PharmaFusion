@@ -30,20 +30,22 @@ struct TabbarController: View {
     
     var body: some View {
         TabView {
-            NavigationView(content: {
+            NavigationStack {
                 HomeView()
-            })
+            }
             .tabItem {
                 Image(systemName: "house")
                 Text("Home")
             }
-            NavigationView(content: {
+            .tint(.white)
+            NavigationStack {
                 ShopView()
-            })
+            }
             .tabItem {
                 Image(systemName: "cart.fill")
                 Text("Shop")
             }
+            .tint(.white)
 //            NavigationView(content: {
 //                ProductView()
 //            })
@@ -51,15 +53,18 @@ struct TabbarController: View {
 //                Image(systemName: "list.clipboard")
 //                Text("Tracking")
 //            }
-            NavigationView {
+            NavigationStack {
                 ProfileView()
             }
             .tabItem {
                 Image(systemName: "person.crop.circle")
                 Text("Profile")
             }
+            .tint(.white)
         }
+        .tint(.init(hex: "503DBB"))
         .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 

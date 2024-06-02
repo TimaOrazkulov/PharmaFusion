@@ -94,7 +94,7 @@ struct ShopView: View {
                                             )
                                         )
                                     } label: {
-                                        items[index]
+                                        items[index].foregroundColor(.black)
                                     }
                                 }
                             }
@@ -106,7 +106,7 @@ struct ShopView: View {
             }
             .background(Color.init(hex: "503DBB"))
             .navigationTitle("Shop")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .tabBar)
         }
     }

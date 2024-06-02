@@ -39,7 +39,6 @@ struct HomeView: View {
 
         )
     )
-//    let items = (0..<100).map { "Item \($0)" }
     
     var body: some View {
         ZStack {

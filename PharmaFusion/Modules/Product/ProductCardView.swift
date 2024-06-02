@@ -10,6 +10,10 @@ import SwiftUI
 struct ProductCardView: View {
     @State private var currentPage = 0
     let productCard: ProductCard
+    @State private var cardIsPresented = false
+    @State private var addressChoiceIsPresented = false
+    @State private var addressIsPresented = false
+    @State private var isFinished = false
 
     var body: some View {
         ScrollView {
@@ -97,7 +101,9 @@ struct ProductCardView: View {
                         .padding(.horizontal, 16)
                         .foregroundStyle(.white)
                     ForEach(productCard.pharmacies, id: \.id) { pharmacy in
-                        PharmacyRow(pharmacy: pharmacy)
+                        PharmacyRow(pharmacy: pharmacy, action: {
+                            cardIsPresented = true
+                        })
                     }
                 }
 
@@ -113,10 +119,51 @@ struct ProductCardView: View {
                     }
                 }
                 .padding()
+                NavigationLink(destination: ProductPaymentView(), isActive: $isFinished) {
+                    EmptyView()
+                }
             }
             .padding(.bottom, 60)
             .background(Color.init(hex: "503DBB"))
         }
+        .bottomSheet(isPresented: $cardIsPresented, content: {
+            ProductView {
+                withAnimation {
+                    cardIsPresented = false
+                }
+            } buyAction: {
+                cardIsPresented = false
+                addressChoiceIsPresented = true
+            } basketAction: {
+                withAnimation {
+                    cardIsPresented = false
+                }
+            }
+        })
+        .bottomSheet(isPresented: $addressChoiceIsPresented, content: {
+            ProductCardAddressChoiceView {
+                withAnimation {
+                    addressChoiceIsPresented = false
+                }
+            } deliveryAction: {
+                addressIsPresented = true
+            } addressAction: {
+                addressChoiceIsPresented = false
+                isFinished = true
+            }
+        })
+        .bottomSheet(isPresented: $addressIsPresented, content: {
+            ProductAddressView {
+                withAnimation {
+                    addressIsPresented = false
+                    isFinished = true
+                }
+            } closeAction: {
+                withAnimation {
+                    addressIsPresented = false
+                }
+            }
+        })
         .navigationTitle("Product Card")
         .navigationBarTitleDisplayMode(.large)
         .background(Color.init(hex: "503DBB"))
@@ -141,6 +188,7 @@ struct Review: Identifiable, Hashable {
 
 struct PharmacyRow: View {
     let pharmacy: Pharmacy
+    let action: (() -> Void)
 
     var body: some View {
         HStack {
@@ -176,7 +224,7 @@ struct PharmacyRow: View {
             Spacer()
 
             VStack(alignment: .trailing) {
-                Button(action: {}, label: {
+                Button(action: action, label: {
                     Text("Choose")
                         .padding(.vertical, 8)
                         .padding(.horizontal, 16)
